@@ -1,0 +1,58 @@
+GraphicsEngine:
+		__init__(config//optional)
+
+		set_root(GraphicsObject)
+			//sets GraphicsObject as root.
+
+		start()
+			//starts running. requires having called set_root() before
+			//calls tick() on root. Drawn stuff appears on screen, keys pressed are passed etc.
+
+		stop()
+			//ends running
+
+		draw(character,relative_coords,color)
+			//draws stuff on screen.
+
+		.config
+			//dictionary with:
+			"delta_time" = 0.015
+			"size" = (80,45)
+
+		.root
+			// GraphicsObject that is a root.
+
+
+
+
+
+
+GraphicsObject:
+	__init__(coords)
+
+	.coords =(x,y)
+
+	.children = []
+		//list of children.
+
+	tick(delta_time,[keys])
+		//takes all stuff from the "draw()" function (_draw_buffer) and puts it on screen
+		//calls tick on all children
+
+	draw(character,relative_coords,color)
+		//adds stuff to be drawn on screen at tick
+
+	add_child(GraphicsObject)
+		//adds a GraphicsObject to .children
+
+	remove_child(GraphicsObject)
+		//removes GraphicsObject from .children
+
+	PRIVATE:
+
+	_draw_buffer = [(coords,character,color),..]
+		//buffer of things to be drawn at screen at "tick()"
+
+	._GraphicsEngine
+		//it is set, when GraphicsEngine is added as a child, and passed to all its children.
+		//used in tick(), so that stuff from _draw_buffer is being drawn, it can be drawn on GraphicsEngine
