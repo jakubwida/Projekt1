@@ -13,7 +13,11 @@ class Display:
 			if coords[i] > self.size[i] or coords[i] < 0:
 				raise IndexError("cannot execute draw(), object outside range")
 			else:
-				self.stdscr.addstr(coords[1],coords[0],character)
+				if color != None:
+					self.stdscr.addstr(coords[1],coords[0],character,color)
+				else:
+					self.stdscr.addstr(coords[1],coords[0],character)
+				#self.stdscr.addstr(coords[1],coords[0],character)
 
 	def dostuff(self,draw_list,wait_time):
 		self.stdscr.clear()

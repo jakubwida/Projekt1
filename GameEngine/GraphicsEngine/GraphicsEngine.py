@@ -1,7 +1,7 @@
 import curses
 import time
 
-from GraphicsEngine.Display import Display
+from GameEngine.GraphicsEngine.Display import Display
 
 class GraphicsEngine:
 	def __init__(self,config=None):

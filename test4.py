@@ -1,5 +1,5 @@
-from EventEngine.EventEngine import EventEngine
-from EventEngine.Event import Event
+from GameEngine.EventEngine.EventEngine import EventEngine
+from GameEngine.EventEngine.Event import Event
 
 ee = EventEngine()
 

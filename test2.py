@@ -1,4 +1,4 @@
-from Util.KeyboardManager import KeyboardManager
+from GameEngine.Util.KeyboardManager import KeyboardManager
 
 km = KeyboardManager("file.txt")
 

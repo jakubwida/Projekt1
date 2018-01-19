@@ -1,4 +1,4 @@
-from Util.GameMap import GameMap
+from GameEngine.Util.GameMap import GameMap
 
 gm = GameMap((10,5))
 

@@ -1,16 +1,16 @@
-from GraphicsEngine import GraphicsEngine
-from GraphicsEngine import GraphicsObject
-from GraphicsEngine import Display
+from GameEngine.GraphicsEngine.GraphicsEngine import GraphicsEngine
+from GameEngine.GraphicsEngine.GraphicsObject import GraphicsObject
+from GameEngine.GraphicsEngine.Display import Display
 
-ge = GraphicsEngine.GraphicsEngine()
-root = GraphicsObject.GraphicsObject()
+ge = GraphicsEngine()
+root = GraphicsObject()
 ge.set_root(root);
 
 
 
 
 
-class SmallInsideObject(GraphicsObject.GraphicsObject):
+class SmallInsideObject(GraphicsObject):
 	def __init__(self,coords):
 		super().__init__(coords)
 

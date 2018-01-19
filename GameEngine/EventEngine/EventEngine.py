@@ -41,6 +41,9 @@ class EventEngine:
 			current_evt[0].execute()
 			self._sort_events()
 
+	def clear_events(self):
+		"""removes all events. usefull at ending"""
+		self.events = []
 
 	def _sort_events(self):
 		self.events = sorted(self.events, key=lambda x: x[1])
