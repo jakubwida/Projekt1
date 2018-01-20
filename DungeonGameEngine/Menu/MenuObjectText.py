@@ -6,6 +6,11 @@ from DungeonGameEngine.Scene import Scene
 import curses
 
 class MenuObjectText(GraphicsObject):
+	""" 
+	class aimed to be placed in MenuScene. displays text at coords. that's it
+	coords -> coordinates where to display itself
+	text ->text to be written
+	"""
 	def __init__(self,coords,text):
 		super().__init__(coords)
 		self.text = text

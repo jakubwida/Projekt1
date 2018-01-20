@@ -31,7 +31,7 @@ class GraphicsObject:
     	graphicsObject -- a child graphicsObject to this one
     	"""
 		self.children.remove(graphicsObject)
-		self.set_self_and_children_graphics_engine(None)
+		graphicsObject.set_self_and_children_graphics_engine(None)
 
 	def tick(self,delta_time,keys,coords):
 		""" function triggered at GraphicsEngine.

@@ -13,10 +13,11 @@ class MainRoot(GraphicsObject):
 		super().tick(delta_time,keys,coords)
 		self.dungeon_game_engine._pass_keys(keys)
 
-	def set_scene(self,scene):
+	def set_scene(self,new_scene):
 		if self.scene != None:
 			self.remove_child(self.scene)
 			self.scene.on_scene_unset()
-		self.scene = scene
-		self.add_child(scene)
+
+		self.scene = new_scene
+		self.add_child(self.scene)
 		self.scene.on_scene_set(self.dungeon_game_engine)
