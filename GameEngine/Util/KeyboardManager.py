@@ -9,10 +9,10 @@ class KeyboardManager:
 		config_file -> file to be read config from
 		"""
 		self.config = {}
-		self.config["W"] = "up"
-		self.config["S"] = "down"
-		self.config["A"] = "left"
-		self.config["D"] = "right"
+		self.config["KEY_UP"] = "up"
+		self.config["KEY_DOWN"] = "down"
+		self.config["KEY_LEFT"] = "left"
+		self.config["KEY_RIGHT"] = "right"
 		#self.config["s_up"] = "KEY_UP"
 		#self.config["s_down"] = "KEY_DOWN"
 		#self.config["s_left"] = "KEY_LEFT"

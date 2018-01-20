@@ -21,7 +21,7 @@ class Actor(GraphicsObject):
 	def on_added_to_game_scene(self,game_scene):
 		self.game_scene = game_scene
 
-	def on_removed_from_game_scene(self,game_scene):
+	def on_removed_from_game_scene(self):
 		self.game_scene = None
 
 	def tick(self,delta_time,keys,coords):

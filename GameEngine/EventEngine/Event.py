@@ -5,6 +5,7 @@ class Event:
 	"""
 	def __init__(self,callabl):
 		self.callable = callabl
+		self.author = None #usefull hook, must be manually accessed
 
 	""" method run when event is run in EventEngine. calls Callable passed in constructor"""
 	def execute(self):

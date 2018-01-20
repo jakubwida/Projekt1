@@ -7,9 +7,9 @@ class GameMap:
 		self.checkrange(coords)
 		return self.map[coords[1]][coords[0]]
 
-	def set(self,coords,object):
+	def set(self,coords,objec):
 		self.checkrange(coords)
-		self.map[coords[1]][coords[0]] = object
+		self.map[coords[1]][coords[0]] = objec
 
 	def checkrange(self,coords):
 		for i,e in enumerate(coords):
