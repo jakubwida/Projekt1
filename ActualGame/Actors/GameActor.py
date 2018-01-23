@@ -11,9 +11,10 @@ class GameActor(Actor):
 		self.game_component = Component
 
 	def new_event(self,callabl,time_due):
-		event = Event(callabl)
-		event.author = self
-		self.game_component.event_engine.add_event(event,time_due)
+		if self.game_component != None:
+			event = Event(callabl)
+			event.author = self
+			self.game_component.event_engine.add_event(event,time_due)
 
 	def on_removed_from_game_component(self):
 		""" this should not be done like this, but im short on time"""

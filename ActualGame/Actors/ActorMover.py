@@ -6,7 +6,7 @@ from ActualGame.Actors.GameActor import GameActor
 class ActorMover(GameActor):
 	def __init__(self,character,coords,color,move_time = 0.5):
 		self.move_time = move_time
-		self.motion_dir = 0 # 0 = center, 1 = north, 2 = east, 3 = south, 4 = west
+		self.motion_dir = 1 # 0 = center, 1 = north, 2 = east, 3 = south, 4 = west
 		self._coords_dir = {0:(0,0),1:(0,-1),2:(1,0),3:(0,1),4:(-1,0)}
 		self.motion_locked = False
 		super().__init__(character,coords,color)
@@ -32,11 +32,12 @@ class ActorMover(GameActor):
 		newc = [self.coords[i]+transp[i] for i in range(2)]
 		dest = self.game_component.game_map.get(newc)
 		if dest == None:
+			self.game_component.game_map.set(self.coords,None)
 			self.coords = newc
+			self.game_component.game_map.set(self.coords,self)
 		else:
 			self.collision(newc,dest)
 		self.new_event(self._clear_motion_lock,self.move_time)
 
 	def collision(self,new_coords,colliding_obj):
-		f = open("log","a")
-		f.write("collision!\n")
+		pass

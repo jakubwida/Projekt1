@@ -29,10 +29,14 @@ class GameComponent(GraphicsObject):
 		actor.on_added_to_game_component(self)
 
 	def remove_actor(self,actor):
-		self.remove_child(actor)
-		self.actor_list.remove(actor)
 		actor.on_removed_from_game_scene()
 		actor.on_removed_from_game_component()
+		self.remove_child(actor)
+		self.actor_list.remove(actor)
+		del actor
+		#f = open("log","a")
+		#f.write(str(self.event_engine.events))
+		#f.write(str(actor))
 
 	def tick(self,delta_time,keys,coords):
 		if(self.game_scene != None) and (self.game_scene.dungeon_game_engine != None):

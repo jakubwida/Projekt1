@@ -49,6 +49,7 @@ class Display:
 
 
 		self.stdscr.nodelay(True)
+
 		curses.noecho()
 		curses.cbreak()
 		self.stdscr.keypad(True)
