@@ -5,6 +5,7 @@ class GraphicsObject:
 		"""creates a basic GraphicsObject.
     	coords -- (int x, int y) coordinates relative to parent GraphicsObject
     	"""
+		self.parent = None
 		self.children = []
 		self._draw_buffer = []
 		if coords != None:
@@ -24,14 +25,24 @@ class GraphicsObject:
     	graphicsObject -- a child graphicsObject to this one
     	"""
 		self.children.append(graphicsObject)
+		graphicsObject.set_parent(self)
 		self.set_self_and_children_graphics_engine(self._GraphicsEngine)
 
 	def remove_child(self,graphicsObject):
 		"""removes a child from GraphicsObject.
     	graphicsObject -- a child graphicsObject to this one
     	"""
+		graphicsObject.un_set_parent()
 		self.children.remove(graphicsObject)
 		graphicsObject.set_self_and_children_graphics_engine(None)
+
+	def set_parent(self,parent):
+		""" called at add_child on added child, with self as argument"""
+		self.parent = parent
+
+	def un_set_parent(self):
+		""" called at remove_child on removed child"""
+		self.parent = None
 
 	def tick(self,delta_time,keys,coords):
 		""" function triggered at GraphicsEngine.

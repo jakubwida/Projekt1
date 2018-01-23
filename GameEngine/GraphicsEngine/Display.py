@@ -1,5 +1,6 @@
 import curses
 import time
+import os
 #this needs workin'
 class Display:
 	def __init__(self,size):
@@ -39,6 +40,9 @@ class Display:
 		return out
 
 	def start(self):
+
+		#removing esc delay
+		os.environ.setdefault('ESCDELAY', '25')
 
 		self.stdscr = curses.initscr()
 
