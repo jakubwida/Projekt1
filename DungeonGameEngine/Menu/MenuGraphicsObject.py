@@ -19,12 +19,9 @@ class MenuGraphicsObject(GraphicsObject):
 		for i in self.texts:
 			self.add_child(i)
 
-		self.on_escape = None
+		self.escape = None
 
 	def tick(self,delta_time,keys,coords):
-		if len(keys) > 0:
-			f = open("log","a")
-			f.write(str(keys)+"\n")
 		if "\x1b" in keys and self.escape != None:
 			self.escape()
 		elif self.active_button_index != None:

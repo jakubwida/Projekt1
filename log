@@ -1,21 +1,17 @@
-['\n']
-['\x1b', '\x1b', '\n']
-['KEY_DOWN']
-['KEY_UP']
-['\n']
-['\x1b']
-['\n']
-['\x1b']
-['\n']
-['\x1b']
-['KEY_RIGHT']
-['KEY_LEFT']
-['\n']
-['\x1b']
-['KEY_DOWN']
-['KEY_UP']
-['KEY_DOWN']
-['KEY_DOWN']
-['KEY_UP']
-['KEY_UP']
-['KEY_DOWN']
+beginning log dump
+<DungeonGameEngine.Game.GameActor.GameActor object at 0xb6e336ec> 1.0
+<DungeonGameEngine.Game.GameActor.GameActor object at 0xb6e3376c> 2.0
+beginning log dump
+<DungeonGameEngine.Game.GameActor.GameActor object at 0xb6e3376c> 2.0
+beginning log dump
+<DungeonGameEngine.Game.GameActor.GameActor object at 0xb6e3376c> 2.0
+movin[5, 6] None <DungeonGameEngine.Game.GameActor.GameActor object at 0xb6e3376c>
+movin[6, 6] None <DungeonGameEngine.Game.GameActor.GameActor object at 0xb6e3376c>
+movin[7, 6] None <DungeonGameEngine.Game.GameActor.GameActor object at 0xb6e3376c>
+movin[8, 6] None <DungeonGameEngine.Game.GameActor.GameActor object at 0xb6e3376c>
+movin[9, 6] None <DungeonGameEngine.Game.GameActor.GameActor object at 0xb6e3376c>
+collidin[9, 6] <DungeonGameEngine.Game.GameActor.GameActor object at 0xb6e3366c> <DungeonGameEngine.Game.GameActor.GameActor object at 0xb6e3376c>
+collidin[9, 6] <DungeonGameEngine.Game.GameActor.GameActor object at 0xb6e3366c> <DungeonGameEngine.Game.GameActor.GameActor object at 0xb6e3376c>
+collidin[9, 6] <DungeonGameEngine.Game.GameActor.GameActor object at 0xb6e3366c> <DungeonGameEngine.Game.GameActor.GameActor object at 0xb6e3376c>
+suicidal:<DungeonGameEngine.Game.GameActor.GameActor object at 0xb6e336ec>
+moving:<DungeonGameEngine.Game.GameActor.GameActor object at 0xb6e3376c>

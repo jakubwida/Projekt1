@@ -40,4 +40,10 @@ class AuthorEventEngine(EventEngine):
 	#NEW ONE, NOT INHERITED
 	def remove_events_by_author(self,author):
 		""" removes events that have a particular author"""
-		self.events = [i for i in self.events if i[0].author != author]
+
+		repl = []
+		for i in self.events:
+			if not (i[0].author is author):
+				repl.append(i)
+		self.events = repl
+		#self.events = [i for i in self.events if not i[0].author is author]
