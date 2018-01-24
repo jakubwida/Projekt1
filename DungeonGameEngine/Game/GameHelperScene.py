@@ -12,11 +12,12 @@ class GameHelperScene(GraphicsObject):
 		""" class used in GameGraphicsObject as a child, wih game information. Non universal
 		"""
 		self.event_engine = AuthorEventEngine()
-		self.keyboard_managet = KeyboardManager()
+		self.keyboard_manager = KeyboardManager()
 		self.game_map = GameMap(size)
 		self.size = size
 
 		self.actor_list = []
+		self.last_keys = []
 
 		super().__init__([0,5])
 
@@ -32,5 +33,6 @@ class GameHelperScene(GraphicsObject):
 		self.event_engine.remove_events_by_author(actor)
 
 	def tick(self,delta_time,keys,coords):
+		self.last_keys = self.keyboard_manager.on_keys(keys)
 		self.event_engine.resolve(delta_time)
 		super().tick(delta_time,keys,coords)

@@ -1,11 +1,25 @@
 from GameEngine.GraphicsEngine.GraphicsObject import GraphicsObject
 from DungeonGameEngine.AuthorEventEngine.AuthorEvent import AuthorEvent
 
+from DungeonGameEngine.Actors.WallActor import WallActor
+from DungeonGameEngine.Actors.PlayerActor import PlayerActor
+from DungeonGameEngine.Actors.BulletActor import BulletActor
+from DungeonGameEngine.Actors.BaddieActor import BaddieActor
+from DungeonGameEngine.Actors.PickupActor import PickupActor
+
 class GameActor(GraphicsObject):
 	def __init__(self,coords,character="A",color=None):
 		self.character = character
 		self.color = color
 		super().__init__(coords)
+
+		#dict used in collisions. key = object class, value = function called when colliding with said object
+		self.collision_dict = {}
+		self.collision_dict[WallActor] = self.collide_wall
+		self.collision_dict[PlayerActor] =self.collide_player
+		self.collision_dict[BulletActor] = self.collide_bullet
+		self.collision_dict[BaddieActor] =self.collide_baddie
+		self.collision_dict[PickupActor] =self.collide_pickup
 
 	def new_event(self,callabl,time_due):
 		""" creates a new event whitch it is athor of. upon die() events are removed. event manager is in GameHelperScene.
@@ -35,8 +49,11 @@ class GameActor(GraphicsObject):
 
 	def collide(self,collidor):
 		""" called when object is reposition() -ed to a position with not None occupying it
+		calls one of collide_player etc. depending on what type is the collidor
 		collidor-> target object"""
-		pass
+		for k,v in self.collision_dict.items():
+			if isinstance(collidor,k):
+				v(collidor)
 
 	def die(self):
 		""" removes itself safely from the GameHelperScene"""
@@ -46,3 +63,24 @@ class GameActor(GraphicsObject):
 		""" draws self.character at relative 0,0 <it's position>, and uses self.color to color itself."""
 		self.draw(self.character,[0,0],self.color)
 		super().tick(delta_time,keys,coords)
+
+
+	def collide_wall(self,collidor):
+		""" called in collide if collidor is wall"""
+		pass
+
+	def collide_player(self,collidor):
+		""" called in collide if collidor is player"""
+		pass
+
+	def collide_bullet(self,collidor):
+		""" called in collide if collidor is bullet"""
+		pass
+
+	def collide_baddie(self,collidor):
+		""" called in collide if collidor is baddie"""
+		pass
+
+	def collide_pickup(self,collidor):
+		""" called in collide if collidor is pickup"""
+		pass
