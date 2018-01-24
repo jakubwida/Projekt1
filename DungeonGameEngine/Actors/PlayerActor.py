@@ -1,7 +1,7 @@
 from DungeonGameEngine.Actors.MoverActor import MoverActor
 
 class PlayerActor(MoverActor):
-	def __init__(self,coords,health):
+	def __init__(self,coords,health=[5,5]):
 		"""
  		health -> [a,b] where a = current, b = max
 		"""
@@ -19,3 +19,15 @@ class PlayerActor(MoverActor):
 		self.health[0] -= damage
 		if self.health[0] <= 0:
 			self.die()
+
+
+	#should be complete
+	def collide_baddie(self,baddie):
+		baddie.hurt_player(self)
+		super().collide_baddie(baddie)
+
+	def collide_pickup(self,pickup):
+		p_coords = pickup.coords
+		pickup.get_picked_up(self)
+		self.reposition(p_coords)
+		super().collide_pickup(pickup)

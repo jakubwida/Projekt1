@@ -1,11 +1,7 @@
 from GameEngine.GraphicsEngine.GraphicsObject import GraphicsObject
 from DungeonGameEngine.AuthorEventEngine.AuthorEvent import AuthorEvent
 
-from DungeonGameEngine.Actors.WallActor import WallActor
-from DungeonGameEngine.Actors.PlayerActor import PlayerActor
-from DungeonGameEngine.Actors.BulletActor import BulletActor
-from DungeonGameEngine.Actors.BaddieActor import BaddieActor
-from DungeonGameEngine.Actors.PickupActor import PickupActor
+
 
 class GameActor(GraphicsObject):
 	def __init__(self,coords,character="A",color=None):
@@ -14,12 +10,7 @@ class GameActor(GraphicsObject):
 		super().__init__(coords)
 
 		#dict used in collisions. key = object class, value = function called when colliding with said object
-		self.collision_dict = {}
-		self.collision_dict[WallActor] = self.collide_wall
-		self.collision_dict[PlayerActor] =self.collide_player
-		self.collision_dict[BulletActor] = self.collide_bullet
-		self.collision_dict[BaddieActor] =self.collide_baddie
-		self.collision_dict[PickupActor] =self.collide_pickup
+		self.collision_dict = None
 
 	def new_event(self,callabl,time_due):
 		""" creates a new event whitch it is athor of. upon die() events are removed. event manager is in GameHelperScene.
@@ -27,7 +18,8 @@ class GameActor(GraphicsObject):
 		time_due -> time till event runs
 		"""
 		ai = AuthorEvent(callabl,self)
-		self.parent.event_engine.add_event(ai,time_due)
+		if self.parent !=None:
+			self.parent.event_engine.add_event(ai,time_due)
 
 	def spawn_actor(self,new_actor):
 		""" safely places a new actor (new_actor) in GameHelperScene"""
@@ -51,6 +43,21 @@ class GameActor(GraphicsObject):
 		""" called when object is reposition() -ed to a position with not None occupying it
 		calls one of collide_player etc. depending on what type is the collidor
 		collidor-> target object"""
+
+		if self.collision_dict == None:
+			from DungeonGameEngine.Actors.WallActor import WallActor
+			from DungeonGameEngine.Actors.PlayerActor import PlayerActor
+			from DungeonGameEngine.Actors.BulletActor import BulletActor
+			from DungeonGameEngine.Actors.BaddieActor import BaddieActor
+			from DungeonGameEngine.Actors.PickupActor import PickupActor
+
+			self.collision_dict = {}
+			self.collision_dict[WallActor] = self.collide_wall
+			self.collision_dict[PlayerActor] =self.collide_player
+			self.collision_dict[BulletActor] = self.collide_bullet
+			self.collision_dict[BaddieActor] =self.collide_baddie
+			self.collision_dict[PickupActor] =self.collide_pickup
+
 		for k,v in self.collision_dict.items():
 			if isinstance(collidor,k):
 				v(collidor)

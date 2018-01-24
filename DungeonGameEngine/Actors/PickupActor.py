@@ -13,3 +13,5 @@ class PickupActor(GameActor):
 	def get_picked_up(self,player):
 		self.on_pickup(player)
 		self.die()
+
+	#no collision functions, as it's not mobile

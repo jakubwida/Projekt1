@@ -30,7 +30,8 @@ class MoverActor(GameActor):
 		transpos = self.dir_dict[direction]
 		new_coords = [e+transpos[i] for i,e in enumerate(self.coords)]
 		self.reposition(new_coords)
-		self.new_event(self._clear_motion_lock,self.move_time)
+		if self.parent !=None:
+			self.new_event(self._clear_motion_lock,self.move_time)
 
 	def _clear_motion_lock(self):
 		self.movement_lock = False
