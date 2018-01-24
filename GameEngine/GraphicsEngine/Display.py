@@ -12,7 +12,7 @@ class Display:
 	def draw(self,character,coords,color):
 		for i in range(2):
 			if coords[i] > self.size[i] or coords[i] < 0:
-				raise IndexError("cannot execute draw(), object outside range")
+				raise IndexError("cannot execute draw(), object outside range:"+str(coords)+" size:"+str(self.size) )
 			else:
 				if color != None:
 					self.stdscr.addstr(coords[1],coords[0],character,color)

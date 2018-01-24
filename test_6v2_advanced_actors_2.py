@@ -46,7 +46,7 @@ baddie = BaddieActor((3,2))
 pickup = PickupActor((12,4),"p",goto_menu)
 
 game_scene.add_child(actor_moving)
-game_scene.add_child(bullet)
+#game_scene.add_child(bullet)
 game_scene.add_child(baddie)
 game_scene.add_child(pickup)
 

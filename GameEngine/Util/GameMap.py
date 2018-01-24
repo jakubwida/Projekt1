@@ -14,4 +14,4 @@ class GameMap:
 	def checkrange(self,coords):
 		for i,e in enumerate(coords):
 			if e > self.size[i] or e <0:
-				raise IndexError("Map index outside range: index = "+str(e))
+				raise IndexError("Map index outside range: index = "+str(e)+" max:"+str(self.size[i])+" dim:"+str(i) )

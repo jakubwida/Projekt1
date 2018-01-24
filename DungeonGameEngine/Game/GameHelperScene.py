@@ -19,6 +19,9 @@ class GameHelperScene(GraphicsObject):
 		self.actor_list = []
 		self.last_keys = []
 
+		self.on_level_end = None
+		self.on_death = None
+
 		super().__init__([0,5])
 
 	def add_child(self,actor):
@@ -36,3 +39,19 @@ class GameHelperScene(GraphicsObject):
 		self.last_keys = self.keyboard_manager.on_keys(keys)
 		self.event_engine.resolve(delta_time)
 		super().tick(delta_time,keys,coords)
+
+	#callable called on death
+	def set_on_death(self,callabl):
+		self.on_death = callabl
+
+	#callable called on level ended
+	def set_on_level_end(self,callabl):
+		self.on_level_end = callabl
+
+	def death(self):
+		if self.on_death != None:
+			self.on_death()
+
+	def level_end(self):
+		if self.on_level_end != None:
+			self.on_level_end()
