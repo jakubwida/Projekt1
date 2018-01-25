@@ -17,7 +17,13 @@ from DungeonGameEngine.Actors.PickupActor import PickupActor
 
 from DungeonGameEngine.Actors.Walls.ExitWallActor import ExitWallActor
 from DungeonGameEngine.Actors.Pickup.ExitPickupActor import ExitPickupActor
+
 from DungeonGameEngine.Actors.Pickup.MGWeaponPickup import MGWeaponPickup
+from DungeonGameEngine.Actors.Pickup.SniperWeaponPickup import SniperWeaponPickup
+from DungeonGameEngine.Actors.Pickup.ShotgunWeaponPickup import ShotgunWeaponPickup
+from DungeonGameEngine.Actors.Pickup.RocketWeaponPickup import RocketWeaponPickup
+from DungeonGameEngine.Actors.Pickup.HealthPickup import HealthPickup
+
 from DungeonGameEngine.Actors.BaddieActor import BaddieActor
 import sys
 
@@ -45,9 +51,9 @@ class LevelReader:
 			gs.add_child(WallActor((0,i)))
 			gs.add_child(WallActor((size[0]-1,i)))
 
-		#for i in range(1,self.size[0]-6):
-		#	gs.add_child(WallActor((i,0)))
-		#	gs.add_child(WallActor((i,self.size[0]-1)))
+		for i in range(1,size[0]):
+			gs.add_child(WallActor((i,0)))
+			gs.add_child(WallActor((i,size[1]-6)))
 
 		center_coords = (int(size[0]/2), int((size[1]-5)/2))
 
@@ -59,7 +65,16 @@ class LevelReader:
 
 		gs.add_child(MGWeaponPickup( ( center_coords[0]+6, center_coords[1] ) ))
 		gs.add_child(BaddieActor((center_coords[0]-6,center_coords[1])))
-		gs.add_child(BaddieActor((center_coords[0]-8,center_coords[1])))
+		gs.add_child(BaddieActor((center_coords[0]-7,center_coords[1])))
+
+		#TESTING BLOCK
+		gs.add_child(SniperWeaponPickup( ( center_coords[0]+6, center_coords[1]+1 ) ))
+		gs.add_child(ShotgunWeaponPickup( ( center_coords[0]+6, center_coords[1]+2 ) ))
+		gs.add_child(RocketWeaponPickup( ( center_coords[0]+6, center_coords[1]+3 ) ))
+		gs.add_child(HealthPickup( ( center_coords[0]+6, center_coords[1]+4 ) ))
+		#END BLOCK
+
+
 		return ggo
 
 	def _generate_further_level(self,size,depth,player):

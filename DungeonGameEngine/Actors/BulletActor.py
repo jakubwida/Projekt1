@@ -37,6 +37,10 @@ class BulletActor(MoverActor):
 		super().collide_wall(wall)
 		self.die()
 
+	def collide_pickup(self,pickup):
+		super().collide_pickup(pickup)
+		self.die()
+
 	def new_event(self,event,time):
 		#f = open("log","a")
 		#f.write("added: "+str(event)+"\n")
