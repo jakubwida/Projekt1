@@ -15,13 +15,21 @@ from DungeonGameEngine.Actors.BulletActor import BulletActor
 from DungeonGameEngine.Actors.BaddieActor import BaddieActor
 from DungeonGameEngine.Actors.PickupActor import PickupActor
 
+from DungeonGameEngine.Actors.Walls.ExitWallActor import ExitWallActor
+from DungeonGameEngine.Actors.Pickup.ExitPickupActor import ExitPickupActor
+from DungeonGameEngine.Actors.Pickup.MGWeaponPickup import MGWeaponPickup
+from DungeonGameEngine.Actors.BaddieActor import BaddieActor
 import sys
 
+from DungeonGameEngine.Launcher.LevelReader import LevelReader
 
 
 class Launcher:
 	def __init__(self):
 		self.size = (80,32)
+
+		self.level_reader = LevelReader()
+
 
 		self.main_menu = self.generate_main_menu()
 		self.help_menu = self.generate_help_menu()
@@ -29,9 +37,10 @@ class Launcher:
 		self.pause_menu = self.generate_pause_menu()
 		self.death_screen = self.generate_death_screen()
 
-		#not finished. should read current level rather than generate 0 level
-		self.current_level = self.generate_level(0)
-		self.level_counter = 0
+		a,b,c = self.read_last_level()
+		self.current_level = a
+		self.current_player = b
+		self.level_counter = c
 		#---
 
 		config = {"size":self.size}
@@ -44,7 +53,7 @@ class Launcher:
 
 
 	def _button_newgame(self):
-		self.current_level = self.generate_level(0)
+		self.reset_game()
 		self.graphics_engine.set_root(self.current_level)
 
 	def _button_continue(self):
@@ -66,11 +75,24 @@ class Launcher:
 		self.graphics_engine.set_root(self.current_level)
 
 	def _goto_death_screen(self):
+		self.reset_game()
 		self.graphics_engine.set_root(self.death_screen)
 
 	def _goto_pause_menu(self):
 		self.graphics_engine.set_root(self.pause_menu)
 
+	def reset_game(self):
+		self.current_level = self.generate_level(0)
+		self.current_player = PlayerActor([0,0])
+		self.level_counter = 0
+		self.level_reader.reset_level_save()
+
+	#TEMPORARY
+	def _on_level_end(self,player):
+		self.current_player = player
+		self.level_counter+=1
+		self.current_level = self.generate_level(self.level_counter)
+		self.graphics_engine.set_root(self.current_level)
 
 	def generate_main_menu(self):
 		t1 = MenuText((3,1),"THE")
@@ -152,25 +174,30 @@ class Launcher:
 		om = MenuGraphicsObject(buttons,texts)
 		return om
 
-	#player is unnescesary at 0 level
-	def generate_level(self,depth,player=None):
-		if depth == 0:
-			gs = GameHelperScene(self.size)
-			ggo = GameGraphicsObject(gs)
 
-			for i in range(self.size[1]-5):
-				gs.add_child(WallActor((0,i)))
-				gs.add_child(WallActor((self.size[0]-1,i)))
+	def generate_level(self,depth):
 
-			#for i in range(1,self.size[0]-6):
-			#	gs.add_child(WallActor((i,0)))
-			#	gs.add_child(WallActor((i,self.size[0]-1)))
+		ggo = self.level_reader.generate_level(self.size,depth,self.current_player)
 
-			gs.add_child(PlayerActor((int(self.size[0]/2),int((self.size[1]-5)/2))))
-			gs.set_on_death(self._goto_death_screen)
-			ggo.set_escape(self._goto_pause_menu)
+		"""
+		gs = ggo.game_scene
 
-			return ggo
-		else:
-			return None
-			#NEEDS TO READ LEVEL FROM PERL, OR OTHERWISE COMMUNICATE WITH IT
+		gs.set_on_death(self._goto_death_screen)
+		gs.set_on_level_end(self._on_level_end)
+
+		ggo.set_escape(self._goto_pause_menu)
+		"""
+		self._inject_level(ggo)
+
+		return ggo
+
+	def read_last_level(self):
+		level,player,depth = self.level_reader.read_last_level()
+		self._inject_level(level)
+		return level,player,depth
+
+	def _inject_level(self,level):
+		gs = level.game_scene
+		gs.set_on_death(self._goto_death_screen)
+		gs.set_on_level_end(self._on_level_end)
+		level.set_escape(self._goto_pause_menu)

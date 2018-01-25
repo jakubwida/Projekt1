@@ -6,7 +6,7 @@ class Weapon:
 		self.rechamber_time = rechamber_time
 		self.name = name
 
-	def on_tick(delta_time):
+	def on_tick(self,delta_time):
 		self.current_time += delta_time
 		if self.ammo[0] == 0:
 			if self.current_time >= self.reload_time:
@@ -17,7 +17,7 @@ class Weapon:
 				self.current_time = self.rechamber_time
 
 	def try_shooting(self,player):
-		if self.ammo[0]>0:
+		if self.ammo[0]>0 and self.rechamber_time == self.current_time:
 			self.ammo[0]-=1
 			self.current_time =0
 			self.shoot(player)
@@ -29,11 +29,14 @@ class Weapon:
 	def get_time_ratio(self):
 		a = self.current_time
 		b = 0.0
-		if self.ammo[0] = 0:
+		if self.ammo[0] == 0:
 			b = self.reload_time
 		else:
 			b = self.rechamber_time
-		return float(a/b)
+		f = open("log","a")
+		f.write(str(a)+" "+str(b)+"\n")
+
+		return float(a)/float(b)
 
 	def get_ammo(self):
 		return self.ammo

@@ -21,18 +21,23 @@ class PlayerActor(MoverActor):
 		super().collide_baddie(baddie)
 
 	def collide_pickup(self,pickup):
+		temp_p = self.parent
 		p_coords = pickup.coords
 		pickup.get_picked_up(self)
-		self.reposition(p_coords)
-		super().collide_pickup(pickup)
+
+		if temp_p == self.parent and self.parent != None:
+			self.reposition(p_coords)
+			super().collide_pickup(pickup)
 
 	def tick(self,delta_time,keys,coords):
 		for i in ("up","down","left","right"):
-			if self.parent.keyboard_manager.poll(i):
+			if  self.parent != None and self.parent.keyboard_manager.poll(i):
 				self.move(i)
-		if self.parent.keyboard_manager.poll("shoot") and self.weapon != None:
+		if self.parent != None and self.parent.keyboard_manager.poll("shoot") and self.weapon != None:
 			self.weapon.try_shooting(self)
 
+		if self.weapon != None:
+			self.weapon.on_tick(delta_time)
 		self._update_display()
 		super().tick(delta_time,keys,coords)
 

@@ -38,9 +38,9 @@ class BulletActor(MoverActor):
 		self.die()
 
 	def new_event(self,event,time):
-		f = open("log","a")
-		f.write("added: "+str(event)+"\n")
+		#f = open("log","a")
+		#f.write("added: "+str(event)+"\n")
 		super().new_event(event,time)
-		f.write("all_events:"+"\n")
-		for i in self.parent.event_engine.events:
-			f.write(str(i[0])+":"+str(i[1])+"\n")
+		#f.write("all_events:"+"\n")
+		#for i in self.parent.event_engine.events:
+		#	f.write(str(i[0])+":"+str(i[1])+"\n")

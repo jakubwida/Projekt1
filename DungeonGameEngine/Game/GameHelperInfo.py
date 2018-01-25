@@ -40,8 +40,8 @@ class GameHelperInfo(GraphicsObject):
 	def _draw_reload(self,coords):
 		rv = self.params["reload"]
 
-		f = open("log","a")
-		f.write("what: "+str(rv)+"\n")
+		#f = open("log","a")
+		#f.write("what: "+str(rv)+"\n")
 
 		rl = int(5.0*rv)
 		rn = 5 - rl

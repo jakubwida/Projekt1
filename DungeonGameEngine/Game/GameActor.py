@@ -23,7 +23,9 @@ class GameActor(GraphicsObject):
 
 	def spawn_actor(self,new_actor):
 		""" safely places a new actor (new_actor) in GameHelperScene"""
-		self.parent.add_child(new_actor)
+		if self.parent != None:
+			if self.parent.game_map.get(new_actor.coords) == None:
+				self.parent.add_child(new_actor)
 
 	def reposition(self,new_position):
 		""" moves self within GameHelperScene. If a target is not None, calls collide(target)
