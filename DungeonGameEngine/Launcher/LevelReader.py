@@ -24,6 +24,12 @@ from DungeonGameEngine.Actors.Pickup.ShotgunWeaponPickup import ShotgunWeaponPic
 from DungeonGameEngine.Actors.Pickup.RocketWeaponPickup import RocketWeaponPickup
 from DungeonGameEngine.Actors.Pickup.HealthPickup import HealthPickup
 
+from DungeonGameEngine.Actors.Baddies.MineBaddieActor import MineBaddieActor
+from DungeonGameEngine.Actors.Baddies.BigMineBaddieActor import BigMineBaddieActor
+from DungeonGameEngine.Actors.Baddies.CrawlerBaddieActor import CrawlerBaddieActor
+from DungeonGameEngine.Actors.Baddies.AmbusherBaddieActor import AmbusherBaddieActor
+from DungeonGameEngine.Actors.Baddies.MotherBaddieActor import MotherBaddieActor
+
 from DungeonGameEngine.Actors.BaddieActor import BaddieActor
 import sys
 
@@ -72,6 +78,12 @@ class LevelReader:
 		gs.add_child(ShotgunWeaponPickup( ( center_coords[0]+6, center_coords[1]+2 ) ))
 		gs.add_child(RocketWeaponPickup( ( center_coords[0]+6, center_coords[1]+3 ) ))
 		gs.add_child(HealthPickup( ( center_coords[0]+6, center_coords[1]+4 ) ))
+
+		gs.add_child(MineBaddieActor( ( center_coords[0]+9, center_coords[1]+1 ) ))
+		gs.add_child(BigMineBaddieActor( ( center_coords[0]+9, center_coords[1]+2 ) ))
+		#gs.add_child(CrawlerBaddieActor( ( center_coords[0]+9, center_coords[1]+3 ) ))
+		#gs.add_child(AmbusherBaddieActor( ( center_coords[0]+9, center_coords[1]+4 ) ))
+		gs.add_child(MotherBaddieActor( ( center_coords[0]+9, center_coords[1]+5 ) ))
 		#END BLOCK
 
 

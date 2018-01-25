@@ -33,8 +33,8 @@ class Weapon:
 			b = self.reload_time
 		else:
 			b = self.rechamber_time
-		f = open("log","a")
-		f.write(str(a)+" "+str(b)+"\n")
+		#f = open("log","a")
+		#f.write(str(a)+" "+str(b)+"\n")
 
 		return float(a)/float(b)
 
