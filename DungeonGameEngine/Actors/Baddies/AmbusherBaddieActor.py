@@ -22,31 +22,31 @@ class AmbusherBaddieActor(BaddieActor):
 			else:
 				a = float(y2-y1)
 			b = y1 - (a * x1)
-			f = open("log","a")
-			f.write("t:"+str(t_coords)+" s:"+str(s_coords)+" ax+b=y a:"+str(a)+" b:"+str(b)+"\n")
+			#f = open("log","a")
+			#f.write("t:"+str(t_coords)+" s:"+str(s_coords)+" ax+b=y a:"+str(a)+" b:"+str(b)+"\n")
 
 			dx = math.fabs(x1-x2)
 			dy = math.fabs(y1-y2)
 			c_list = []
-			f = open("log","a")
+			#f = open("log","a")
 			if dx > dy:
 				xs = min([x1,x2])
 				xe = max([x1,x2])
 				for x in range(xs,xe):
 					c_list.append((math.floor(x),math.floor((a*x)+b)))
-				f.write("dx>dy: "+str(c_list)+"\n")
+				#f.write("dx>dy: "+str(c_list)+"\n")
 			else:
 				ys = min([y1,y2])
 				ye = max([y1,y2])
 				for y in range(ys,ye):
 					c_list.append((int((y-b)/a),int(y)))
-				f.write("dy>dx: "+str(c_list)+"\n")
+				#f.write("dy>dx: "+str(c_list)+"\n")
 
 			for i in c_list:
 				elem = self.parent.game_map.get(i)
 
 				if not(elem == None or elem == self or isinstance(elem,PlayerActor)):
-					f.write("caught: : "+str(i)+" "+str(elem)+"\n")
+					#f.write("caught: : "+str(i)+" "+str(elem)+"\n")
 					return False
 			return True
 		return False

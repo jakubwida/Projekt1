@@ -66,7 +66,8 @@ class GameActor(GraphicsObject):
 
 	def die(self):
 		""" removes itself safely from the GameHelperScene"""
-		self.parent.remove_child(self)
+		if self.parent != None:
+			self.parent.remove_child(self)
 
 	def tick(self,delta_time,keys,coords):
 		""" draws self.character at relative 0,0 <it's position>, and uses self.color to color itself."""

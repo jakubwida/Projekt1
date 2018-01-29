@@ -28,7 +28,7 @@ class Launcher:
 	def __init__(self):
 		self.size = (80,32)
 
-		self.level_reader = LevelReader()
+		self.level_reader = LevelReader(self.size)
 
 
 		self.main_menu = self.generate_main_menu()
@@ -37,10 +37,10 @@ class Launcher:
 		self.pause_menu = self.generate_pause_menu()
 		self.death_screen = self.generate_death_screen()
 
-		a,b,c = self.read_last_level()
-		self.current_level = a
-		self.current_player = b
-		self.level_counter = c
+		self.current_level = None
+		self.current_player = None
+		self.current_depth = 0
+		self.get_last_level()
 		#---
 
 		config = {"size":self.size}
@@ -53,7 +53,7 @@ class Launcher:
 
 
 	def _button_newgame(self):
-		self.reset_game()
+		self.reset_level()
 		self.graphics_engine.set_root(self.current_level)
 
 	def _button_continue(self):
@@ -75,23 +75,15 @@ class Launcher:
 		self.graphics_engine.set_root(self.current_level)
 
 	def _goto_death_screen(self):
-		self.reset_game()
+		self.reset_level()
 		self.graphics_engine.set_root(self.death_screen)
 
 	def _goto_pause_menu(self):
 		self.graphics_engine.set_root(self.pause_menu)
 
-	def reset_game(self):
-		self.current_level = self.generate_level(0)
-		self.current_player = PlayerActor([0,0])
-		self.level_counter = 0
-		self.level_reader.reset_level_save()
-
-	#TEMPORARY
 	def _on_level_end(self,player):
-		self.current_player = player
-		self.level_counter+=1
-		self.current_level = self.generate_level(self.level_counter)
+		self.current_depth+=1
+		self.generate_and_get_new_level()
 		self.graphics_engine.set_root(self.current_level)
 
 	def generate_main_menu(self):
@@ -175,26 +167,22 @@ class Launcher:
 		return om
 
 
-	def generate_level(self,depth):
+	def get_last_level(self):
+		a,b,c = self.level_reader.read_last_level()
+		self.current_level = a
+		self.current_player = b
+		#f = open("log","a")
+		#f.write(str(self.current_player.health)+"\n")
+		self.current_depth = c
+		self._inject_level(self.current_level)
 
-		ggo = self.level_reader.generate_level(self.size,depth,self.current_player)
+	def reset_level(self):
+		self.level_reader.reset_level_save()
+		self.get_last_level()
 
-		"""
-		gs = ggo.game_scene
-
-		gs.set_on_death(self._goto_death_screen)
-		gs.set_on_level_end(self._on_level_end)
-
-		ggo.set_escape(self._goto_pause_menu)
-		"""
-		self._inject_level(ggo)
-
-		return ggo
-
-	def read_last_level(self):
-		level,player,depth = self.level_reader.read_last_level()
-		self._inject_level(level)
-		return level,player,depth
+	def generate_and_get_new_level(self):
+		self.level_reader.generate_level(self.current_player,self.current_depth)
+		self.get_last_level()
 
 	def _inject_level(self,level):
 		gs = level.game_scene

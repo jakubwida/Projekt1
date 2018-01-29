@@ -1,0 +1,27 @@
+1. generator przechodzeniowo labiryntowy.
+
+- generowana jest 2d tablica - może być w pliku tekstowym <daje możliwość monitorowania>
+-tablica wypełniona jest znakiem ściany
+-jest punkt w którym tablica zmiena znak ze ściany na puste miejsce
+- punkt ten zmienia losowo położenie, aż zadany % powierzchni to nie-ściana
+- pozostałe komórki dostają przydzielony losowy znak. przy każdym przydzieleniu następnego znaku, wszystkie sąsiadujące z nim znaki dostają przydzielone ten sam znak, tak że wszystkie porozdzielane obszary ścian mają inny znak.
+-zbierane są typy znaków które pozostały, i powierzchnie które zajmują
+-losowo usuwane są te pola znaków które zajmują najmniej miejsca.
+-pozostałe znaki zostają zamienione na ściany
+-zostaje toto obramowane dodatkową warstwą ściany, i jest gotowe do rozdzielania dóbr.
+
+-drugi etap - rozprowadzanie dóbr:
+	-gracz i wyjście są obowiązkowe.
+	-ilość dóbr i potworków jest generowana na początku i są rozdysponowywane w losowe miejsca aż się skończą
+
+-trzeci etap: - parsowacja do pythona:
+	-bierze toto i parsuje całą mapę zapisując jej wszystko do pliku z formatem takim jak python
+
+//co jest potrzebne z perla:
+	> zapis/odczyt zmiennych
+	> moduły
+	> funkcje
+	> odczyt/zapis pliku
+	> random
+	> operacje matematyczne
+	> tablice

@@ -1,0 +1,12 @@
+@property
+size_x 80
+size_y 32
+depth 2
+@player
+x 10
+y 15
+weapon m
+health 5
+@actor
+we 20 7
+bm 22 7
