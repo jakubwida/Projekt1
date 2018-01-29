@@ -531,7 +531,279 @@ foreach $elem(@{$out_list_ref})
 	}
 =cut
 
-#TODO:
-#inserter of actors. however simple it may be.
-#plan is to use block_to_list_of_coords to create list of all free coords.
-#choose at random from it and remove neighbors that dont work as intended
+# $coord_string  -> @(x,y)
+sub str_c_to_arr
+	{
+	my $input = $_[0];
+
+	my @out_list = split(/_/,$input);
+	@out_list = (int($out_list[0]),int($out_list[1]));
+	return @out_list;
+	}
+
+# \$block \@string_coord_list \@object_size $char \@size  --> \@(\$block, \@string_coord_list)
+sub generate_fielded_object
+	{
+	my $block_ref = $_[0];
+	my @str_coord_list = @{$_[1]};
+	my @obj_size = @{$_[2]};
+	my $char = $_[3];
+	my @size = @{$_[4]};
+
+
+
+	while(1==1)
+		{
+		#print("@str_coord_list \n");
+
+		my $random_index = rand(@str_coord_list);
+		my @coords = str_c_to_arr($str_coord_list[$random_index]);
+
+		my @str_potential_targets = ();
+		for($i=0; $i<$obj_size[1]; $i++ )
+			{
+			for($j=0; $j<$obj_size[0]; $j++ )
+				{
+				my $x = $j+$coords[0];
+				my $y = $i+$coords[1];
+				my $passed = "$x" . "_" . "$y";
+				push(@str_potential_targets,$passed);
+				}
+			}
+		#print("potential targets @str_potential_targets \n");
+
+		my @index_list = ();
+		my $flag = 1;
+		foreach $target(@str_potential_targets)
+			{
+			#print("checkin: $target \n");
+			$flag = 0;
+			for($i=0; $i<scalar(@str_coord_list); $i++ )
+				{
+				if($str_coord_list[$i] eq $target)
+					{
+					#print("$str_coord_list[$i] \n");
+					push(@index_list,$i);
+					$flag = 1;
+					last;
+					}
+				}
+			#print("flag $flag \n");
+			if($flag == 0)
+				{
+
+				last;
+				}
+			}
+
+		if($flag == 1)
+			{
+			my @target_coords = ($coords[0]+int($obj_size[0]/2),$coords[1]+int($obj_size[1]/2));
+			#print("target coord:  @target_coords \n");
+
+			my $block_ref = set_in_block($block_ref,\@size,\@target_coords,$char);
+
+			@index_list = sort { $a <=> $b } @index_list;
+			@index_list = reverse(@index_list);
+			foreach $index(@index_list)
+				{
+				splice(@str_coord_list,$index,1);
+				}
+			return (\@str_coord_list,$block_ref);
+			}
+
+		}
+
+	}
+
+=begin co
+@size = (80,32);
+$block = generate_text_room(\@size);
+#print_block($block,[80,32]);
+$coord_list_ref = block_to_list_of_coords($block,\@size);
+
+print(scalar(@$coord_list_ref));
+print("\n");
+
+@out = generate_fielded_object($block,$coord_list_ref,[10,10],"p",\@size);
+$coord_list_ref = $out[0];
+
+print(scalar(@$coord_list_ref));
+print("\n");
+
+$nblock = $out[1];
+print_block($nblock,\@size);
+=cut
+
+
+# \@size $depth
+sub generate_actors_to_room
+	{
+	my @size = @{$_[0]};
+	my $depth = $_[1];
+
+	my $block = generate_text_room(\@size);
+	my $coord_list_ref = block_to_list_of_coords($block,\@size);
+
+	#player
+	my @out = generate_fielded_object($block,$coord_list_ref,[13,13],"p",\@size);
+	my $block = $out[1];
+	my $coord_list_ref = $out[0];
+
+	#exit
+	my @out = generate_fielded_object($block,$coord_list_ref,[3,3],"e",\@size);
+	my $block = $out[1];
+	my $coord_list_ref = $out[0];
+
+	#others:
+	my $danger_level = $depth * 2;
+	my $weapon_num = 3;
+	my $health_level = 3+int($depth/4);
+
+	#print("$danger_level $weapon_num $health_level \n");
+
+	my @baddie_dict = ("x","x","x","X","X","C","C","C","A","M");
+	my @baddie_danger_dict = (1,1,1,2,2,3,3,3,5,8);
+
+	while($danger_level > 0)
+		{
+		while(1==1)
+			{
+			$new_index = rand(@baddie_dict);
+			$new_baddie = $baddie_dict[$new_index];
+			$new_danger_level = $baddie_danger_dict[$new_index];
+
+			if($new_danger_level <= $danger_level)
+				{
+				last;
+				}
+			}
+		$danger_level -= $new_danger_level;
+
+		my @out = generate_fielded_object($block,$coord_list_ref,[1,1],$new_baddie,\@size);
+		$block = $out[1];
+		$coord_list_ref = $out[0];
+		}
+
+	for(my $i=0;$i<$health_level;$i++)
+		{
+		my @out = generate_fielded_object($block,$coord_list_ref,[1,1],"+",\@size);
+		#print("health $i $health_level \n");
+		$block = $out[1];
+		$coord_list_ref = $out[0];
+		}
+
+	@weapon_list = ("m","g","s","r");
+
+	for(my $i=0;$i<$weapon_num;$i++)
+		{
+
+		my $random_weapon = @weapon_list[rand($weapon_num)];
+		#print("$random_weapon $i $weapon_num \n");
+
+		my @out = generate_fielded_object($block,$coord_list_ref,[1,1],$random_weapon,\@size);
+		$block = $out[1];
+		$coord_list_ref = $out[0];
+		}
+
+	return $block;
+	}
+
+
+
+
+# \$block \@size  -> (\@player_coords, \@list_of_references to ($str,$x,$y) of actors);
+sub translate_to_python
+	{
+	my $block = ${$_[0]};
+	my @size = @{$_[1]};
+
+	my $len = length($block);
+
+	my @actor_ref_list = ();
+	my @player_coords =();
+	my %actor_dict = ("."=>"w","e"=>"we", "x"=>"bm","X"=>"bM","C"=>"bc","A"=>"ba","M"=>"bmo", "+"=>"p+","m"=>"pm","s"=>"ps","g"=>"pg","r"=>"pr");
+
+
+	for($i=0;$i<$len;$i++)
+		{
+		$tblock = $block;
+		my $char = substr($tblock, $i, 1);
+		my $x = $i % $size[0];
+		my $y = int(($i - $x) / $size[0]);
+		if($char eq "p" )
+			{
+			@player_coords = ($x,$y);
+			}
+		elsif($char ne " ")
+			{
+			my @new_actor = ($actor_dict{$char},$x,$y);
+			#print("$char \n");
+			#print("new actor: @new_actor \n");
+			push(@actor_ref_list,\@new_actor);
+			}
+		}
+
+	return(\@player_coords,\@actor_ref_list)
+	}
+=begin
+@size = (80,32);
+$block = generate_actors_to_room(\@size,5);
+@outo = translate_to_python($block,\@size);
+@actors = @{$outo[1]};
+#foreach $actor_ref(@actors)
+#	{
+#	print("@$actor_ref \n");
+#	}
+=cut
+
+# \@size \$filename \$weapon $health $depth
+sub generate_level_write
+	{
+	my @size = @{$_[0]};
+	my $filename = ${$_[1]};
+	my $weapon = ${$_[2]};
+	my $health = $_[3];
+	my $depth = $_[4];
+
+	my $block = generate_actors_to_room(\@size,$depth);
+	my @outo = translate_to_python($block,\@size);
+
+	my @actors = @{$outo[1]};
+	my @player_coords = @{$outo[0]};
+
+	open(my $fh, '>', $filename);
+
+	print ($fh "\@property\n");
+	my $x = $size[0];
+	my $y = $size[1];
+	print ($fh "size_x $x\n");
+	print ($fh "size_y $y\n");
+	print ($fh "depth $depth\n");
+
+	print ($fh "\@player\n");
+	my $px = $player_coords[0];
+	my $py = $player_coords[1];
+	print ($fh "x $px\n");
+	print ($fh "y $py\n");
+	print ($fh "weapon $weapon\n");
+	print ($fh "health $health\n");
+
+	print ($fh "\@actor\n");
+	foreach $actor_ref(@actors)
+		{
+		my @arro = @{$actor_ref};
+		my $actor_str = @arro[0];
+		my $actor_x = @arro[1];
+		my $actor_y = @arro[2];
+		print ($fh "$actor_str $actor_x $actor_y\n");
+		}
+
+	close $fh;
+	}
+@size = (80,32);
+$filename = "test.txt";
+$weapon = "m";
+$health = 3;
+$depth = 5;
+generate_level_write(\@size,\$filename,\$weapon,$health,$depth);
