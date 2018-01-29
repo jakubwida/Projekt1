@@ -38,6 +38,7 @@ from DungeonGameEngine.Weapons.RocketWeapon import RocketWeapon
 from DungeonGameEngine.Actors.BaddieActor import BaddieActor
 import sys
 import os
+import subprocess
 
 class LevelReader:
 	def __init__(self,size):
@@ -90,16 +91,16 @@ class LevelReader:
 		gs.add_child(BaddieActor((center_coords[0]-7,center_coords[1])))
 
 		#TESTING BLOCK
-		gs.add_child(SniperWeaponPickup( ( center_coords[0]+6, center_coords[1]+1 ) ))
-		gs.add_child(ShotgunWeaponPickup( ( center_coords[0]+6, center_coords[1]+2 ) ))
-		gs.add_child(RocketWeaponPickup( ( center_coords[0]+6, center_coords[1]+3 ) ))
-		gs.add_child(HealthPickup( ( center_coords[0]+6, center_coords[1]+4 ) ))
+		#gs.add_child(SniperWeaponPickup( ( center_coords[0]+6, center_coords[1]+1 ) ))
+		#gs.add_child(ShotgunWeaponPickup( ( center_coords[0]+6, center_coords[1]+2 ) ))
+		#gs.add_child(RocketWeaponPickup( ( center_coords[0]+6, center_coords[1]+3 ) ))
+		#gs.add_child(HealthPickup( ( center_coords[0]+6, center_coords[1]+4 ) ))
 
-		gs.add_child(MineBaddieActor( ( center_coords[0]+9, center_coords[1]+1 ) ))
-		gs.add_child(BigMineBaddieActor( ( center_coords[0]+9, center_coords[1]+2 ) ))
+		#gs.add_child(MineBaddieActor( ( center_coords[0]+9, center_coords[1]+1 ) ))
+		#gs.add_child(BigMineBaddieActor( ( center_coords[0]+9, center_coords[1]+2 ) ))
 		#gs.add_child(CrawlerBaddieActor( ( center_coords[0]+9, center_coords[1]+3 ) ))
 		#gs.add_child(AmbusherBaddieActor( ( center_coords[0]+9, center_coords[1]+4 ) ))
-		gs.add_child(MotherBaddieActor( ( center_coords[0]+9, center_coords[1]+5 ) ))
+		#gs.add_child(MotherBaddieActor( ( center_coords[0]+9, center_coords[1]+5 ) ))
 		#END BLOCK
 
 
@@ -109,19 +110,21 @@ class LevelReader:
 
 	def _prod_perl_generator(self,size,player,depth):
 		""" temporary """
-		f = open(self.last_level_filename,"w")
-		f.write("""@property
-size_x 80
-size_y 32
-depth 1
-@player
-x 10
-y 15
-weapon m
-health 5
-@actor
-we 20 7
-bm 22 7""")
+		#ugly
+		weapon = "m"
+		if isinstance(player.weapon, MGWeapon):
+			weapon = "m"
+		elif isinstance(player.weapon, ShotgunWeapon):
+			weapon = "s"
+		elif isinstance(player.weapon, SniperWeapon):
+			weapon = "g"
+		elif isinstance(player.weapon, RocketWeapon):
+			weapon = "r"
+
+		#var = ""+str(size[0])+" "+str(size[1]-5)+" "+str(self.last_level_filename)+" "+str(weapon)+" "+str(player.health[0])+" "+str(depth)
+
+		FNULL = open(os.devnull, 'w')
+		subprocess.call(['perl', 'PerlLevelGen.pl',str(size[0]), str(size[1]-5), str(self.last_level_filename), str(weapon), str(player.health[0]), str(depth)],stdout=FNULL,stderr=FNULL);
 
 	def _read_level(self,filename):
 		""" returns a GameGraphicsObject, player and depth value as a,b,c, read from filename"""
@@ -175,7 +178,7 @@ bm 22 7""")
 
 		gs.add_child(player)
 		for i in actor_list:
-			print(str(i.coords)+" /");
+			#print(str(i.coords)+" /");
 			gs.add_child(i)
 
 		return ggo,player,depth

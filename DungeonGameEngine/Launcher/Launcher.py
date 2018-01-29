@@ -107,13 +107,13 @@ class Launcher:
 
 	def generate_help_menu(self):
 		t1 = MenuText((3,1),"HELP SCREEN")
-		t2 = MenuText((3,3),"To navigate in menu's use [arrow keys], and [enter] to select.")
+		t2 = MenuText((3,3),"To navigate in the menus use [arrow keys], and [enter] to select.")
 		t3 = MenuText((3,5),"In the game, you controll a \"P\" player.")
-		t4 = MenuText((3,6),"In order to progress, shot all enemies in the room, end reach the \"E\" exit ")
+		t4 = MenuText((3,6),"In order to progress, shoot all enemies in the room, end reach the \"E\" exit ")
 		t5 = MenuText((3,7),"You may use pick-ups to restore health, or get new weapons")
-		t6 = MenuText((3,8),"Enemies touching player will decrease health. No health ends game.")
-		t7 = MenuText((3,9),"Enemies are underlined. Pick-ups are blinking")
-		t8 = MenuText((3,10),"[escape] button pauses game, and possibly exit.")
+		t6 = MenuText((3,8),"Enemies touching player will decrease health, which at 0 - will cause game over.")
+		t7 = MenuText((3,9),"Enemies are underlined.")
+		t8 = MenuText((3,10),"[escape] button pauses game, and allows to exit.")
 		t9 = MenuText((3,11),"Exiting will allow to continue game later, but with the last room reset.")
 
 		texts = [t1,t2,t3,t4,t5,t6,t7,t8,t9]
@@ -126,7 +126,7 @@ class Launcher:
 		return hm
 
 	def generate_options_menu(self):
-		t1 = MenuText((3,1),"OPTIONS SCREEN - NON MUTABLE PLACEHOLDER")
+		t1 = MenuText((3,1),"CONTROLS SCREEN")
 		t2 = MenuText((3,3),"[arrow keys] move")
 		t3 = MenuText((3,4),"[space] shoot")
 

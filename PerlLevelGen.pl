@@ -616,7 +616,7 @@ sub generate_actors_to_room
 	for(my $i=0;$i<$weapon_num;$i++)
 		{
 
-		my $random_weapon = @weapon_list[rand($weapon_num)];
+		my $random_weapon = @weapon_list[rand(@weapon_list)];
 		#print("$random_weapon $i $weapon_num \n");
 
 		my @out = generate_fielded_object($block,$coord_list_ref,[1,1],$random_weapon,\@size);
