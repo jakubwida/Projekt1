@@ -776,7 +776,7 @@ sub generate_level_write
 
 	print ($fh "\@property\n");
 	my $x = $size[0];
-	my $y = $size[1];
+	my $y = $size[1]+5; #!!!!!!!!
 	print ($fh "size_x $x\n");
 	print ($fh "size_y $y\n");
 	print ($fh "depth $depth\n");
@@ -801,9 +801,20 @@ sub generate_level_write
 
 	close $fh;
 	}
-@size = (80,32);
-$filename = "test.txt";
+=begin
+@size = (80,27);
+$filename = "last_level.txt";
 $weapon = "m";
 $health = 3;
-$depth = 5;
+$depth = 2;
+generate_level_write(\@size,\$filename,\$weapon,$health,$depth);
+=cut
+
+my ($xsize, $ysize, $filename, $weapon, $health, $depth) = @ARGV;
+
+@size = ($xsize,$ysize);
+#$filename = "last_level.txt";
+#$weapon = "m";
+#$health = 3;
+#$depth = 2;
 generate_level_write(\@size,\$filename,\$weapon,$health,$depth);

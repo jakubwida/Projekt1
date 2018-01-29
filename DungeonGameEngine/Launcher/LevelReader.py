@@ -163,6 +163,7 @@ bm 22 7""")
 		#print(property_dict)
 
 		player_coords = [int(player_dict["x"]),int(player_dict["y"])]
+
 		weapon_name = player_dict["weapon"]
 		#print(player_dict["weapon"])
 		weapon = weapon_dict[weapon_name]()
@@ -174,6 +175,7 @@ bm 22 7""")
 
 		gs.add_child(player)
 		for i in actor_list:
+			print(str(i.coords)+" /");
 			gs.add_child(i)
 
 		return ggo,player,depth
