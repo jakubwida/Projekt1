@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ip="127.0.0.1"
-myip=`ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p'`
+myip=`hostname -I`
 
 while getopts "hi:" opt; do
   case $opt in

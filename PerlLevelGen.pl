@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-use warnings;
+#use warnings;
 
 # \@coords_1, \@_coords2   ->   returns hash object (not reference)
 sub generate_room
@@ -729,6 +729,12 @@ generate_level_write(\@size,\$filename,\$weapon,$health,$depth);
 =cut
 
 my ($xsize, $ysize, $filename, $weapon, $health, $depth) = @ARGV;
+
+if($xsize eq "-h" )
+{
+print("This script is not ment to be executed on it's own - it is launched by GameLauncher.py. \nIt will now quit \n");
+exit 0;
+}
 
 @size = ($xsize,$ysize);
 generate_level_write(\@size,\$filename,\$weapon,$health,$depth);
