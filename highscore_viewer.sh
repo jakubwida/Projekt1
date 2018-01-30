@@ -39,8 +39,8 @@ done
 send_and_print_response_from_server()
 {
 #echo "$myip $1"
-echo -n "$myip $1" | nc $ip 1234
-out=` nc -l -w3 -p 1235`
+echo -n "$myip $1" | nc -w1 $ip 1234
+out=` nc -l -w1 -p 1235`
 #echo `echo $out | awk '{print $1,$2,$3,"\n"}'`
 #echo "kurka!"
 #echo `echo $out | awk '{print $4,$5,$6,"\n"}'`
@@ -78,10 +78,10 @@ then
 		fi
 fi
 
-#if [ $intr1 = "top_month" ]
-#then
-#	send_and_print_response_from_server "$intr1 $instr2"
-#fi
+if [ $intr1 = "top_day" ]
+then
+	send_and_print_response_from_server "$intr1 $instr2"
+fi
 
 if [ $intr1 = "top_by_user" ]
 then

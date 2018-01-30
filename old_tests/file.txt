@@ -1,6 +1,0 @@
-special=E
-shoot= 
-down=S
-up=W
-left=A
-right=D

@@ -2,7 +2,8 @@
 
 get_top_5()
 {
-output=`head -5 temp.txt`
+sort -nrk 2 temp.txt > out_temp.txt #possible errors
+output=`head -5 out_temp.txt`
 echo $output
 }
 
@@ -96,8 +97,9 @@ if [ $1 = "send" ]
 then
 	echo "$2 $3 $4" >> result_base.txt
 	awk '!a[$0]++' result_base.txt > temp.txt #possible removal errors while adding
-	cat temp.txt > result_base.txt
+	sort -nrk 2 temp.txt  > result_base.txt
 	scores_to_tempfile_all_time
+	#sort -nrk 2 temp.txt > out_temp.txt
 	num=`this_score_position_in_temp "$2 $3 $4"`
 	echo "all-time position: $num"
 fi
@@ -110,13 +112,14 @@ check_receptor()
 {
 if [ -s receptor ]
 then
-	echo "henlo!"
+	echo "receiving!"
 	echo `cat receptor`
 	a=`cat receptor  | head -n1 | cut -d " " -f1`
 	b=`cat receptor | awk '{print $2}'`
 	c=`cat receptor | awk '{$1=""; $2=""; print }'`
 	#echo "$a       $b       $c"
 	response=`on_request $b $c`
+	echo "responding!"
 	echo $response
 	echo $response | nc $a 1235
 

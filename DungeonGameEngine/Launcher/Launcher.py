@@ -93,10 +93,10 @@ class Launcher:
 		if os.path.isfile("current_highscore.txt"):
 			f = open("current_highscore.txt","r");
 			lines = f.readlines()
-			score = int(lines[0])
+			score = int(lines[0].split()[0])
 		if score < self.current_depth:
 			f = open("current_highscore.txt","w")
-			f.write(str(self.current_depth)+"\n")
+			f.write(str(self.current_depth)+" ")
 			now = datetime.datetime.now()
 			f.write(str(now.year)+":"+str(now.month)+":"+str(now.day)+"\n")
 
