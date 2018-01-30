@@ -23,6 +23,9 @@ import sys
 
 from DungeonGameEngine.Launcher.LevelReader import LevelReader
 
+import datetime
+import os
+
 
 class Launcher:
 	def __init__(self):
@@ -85,6 +88,17 @@ class Launcher:
 		self.current_depth+=1
 		self.generate_and_get_new_level()
 		self.graphics_engine.set_root(self.current_level)
+
+		score = 0
+		if os.path.isfile("current_highscore.txt"):
+			f = open("current_highscore.txt","r");
+			lines = f.readlines()
+			score = int(lines[0])
+		if score < self.current_depth:
+			f = open("current_highscore.txt","w")
+			f.write(str(self.current_depth)+"\n")
+			now = datetime.datetime.now()
+			f.write(str(now.year)+":"+str(now.month)+":"+str(now.day)+"\n")
 
 	def generate_main_menu(self):
 		t1 = MenuText((3,1),"THE")
