@@ -79,7 +79,7 @@ class KeyboardManager:
 		key_list -> list of key input ("W","KEY_UP" etc) from curses.
 		"""
 		setlist = list(set(key_list))
-		f = open("log")
+		f = open("log","a")
 		f.write(str(setlist));
 		v_list = [self.config[k] for k in setlist if k in self.config.keys()]
 		emitted_changes = []
