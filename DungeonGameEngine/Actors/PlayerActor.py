@@ -49,7 +49,7 @@ class PlayerActor(MoverActor):
 			params["health"] = self.health
 			params["ammo"] = [0,0]
 			params["reload"] = 0.0
-			params["weapon"] = "---"
+			params["weapon"] = "no weapon"
 			if self.weapon != None:
 				params["ammo"] = self.weapon.get_ammo()
 				params["reload"] = self.weapon.get_time_ratio()
