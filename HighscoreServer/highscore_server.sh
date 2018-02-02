@@ -121,7 +121,7 @@ then
 	response=`on_request $b $c`
 	echo "responding!"
 	echo $response
-	echo $response | nc $a 1235
+	echo $response | nc $a 1235 -q 0
 
 	: > receptor
 fi
