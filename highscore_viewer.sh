@@ -7,7 +7,7 @@ while getopts "hi:" opt; do
   case $opt in
     h)
       #echo "-a was triggered, Parameter: $OPTARG" >&2
-			echo "This is a client-viewer. The server must be available at port 1234, and 1235 must be clear for communication. Follow the on-screen prompts for instrucitons."
+			echo "This is a client-viewer. The server must be available at port 1234, and 1235 must be clear for communication. Follow the on-screen prompts for instrucitons. Look in README.txt for more details."
 			echo "OPTIONS"
 			echo "-h: it displays this text."
 			echo "-i: <optional> IP - requires parameter IP which must be a valid ip address. This address is the server target"

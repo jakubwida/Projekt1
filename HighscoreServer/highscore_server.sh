@@ -144,7 +144,7 @@ while getopts "h" opt; do
   case $opt in
     h)
       #echo "-a was triggered, Parameter: $OPTARG" >&2
-			echo "This is a server. It must be run before the client. It features no options, as ports are fixed - those are 1234 and 1235."
+			echo "This is a server. It must be run before the client. It features no options, as ports are fixed - those are 1234 and 1235. For more information open README.txt"
       exit 0
       ;;
     \?)
