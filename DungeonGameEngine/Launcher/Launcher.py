@@ -132,12 +132,12 @@ class Launcher:
 		t10 = MenuText((3,14),"They appear as lower case not-underlined characters.")
 		t11 = MenuText((3,15),"You can get new weapons or restore health by moving into them.")
 		t12 = MenuText((3,17),"If you leave the game without Player death or starting new game")
-		t13 = MenuText((3,18)," you can continue from the last visited room.")
+		t13 = MenuText((3,18),"you can continue from the last visited room.")
 		t14 = MenuText((3,19),"Otherwise, using this button in main menu will start new game.")
 
 		texts = [t1,t2,t3,t4,t5,t6,t7,t8,t9,t10,t11,t12,t13,t14]
 
-		b1 = MenuButton((3,12),"back",self._button_main_menu)
+		b1 = MenuButton((3,21),"back",self._button_main_menu)
 
 		buttons = [b1]
 
