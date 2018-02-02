@@ -122,15 +122,20 @@ class Launcher:
 	def generate_help_menu(self):
 		t1 = MenuText((3,1),"HELP SCREEN")
 		t2 = MenuText((3,3),"To navigate in the menus use [arrow keys], and [enter] to select.")
-		t3 = MenuText((3,5),"In the game, you controll a \"P\" player.")
-		t4 = MenuText((3,6),"In order to progress, shoot all enemies in the room, end reach the \"E\" exit ")
-		t5 = MenuText((3,7),"You may use pick-ups to restore health, or get new weapons")
-		t6 = MenuText((3,8),"Enemies touching player will decrease health, which at 0 - will cause game over.")
-		t7 = MenuText((3,9),"Enemies are underlined.")
-		t8 = MenuText((3,10),"[escape] button pauses game, and allows to exit.")
-		t9 = MenuText((3,11),"Exiting will allow to continue game later, but with the last room reset.")
+		t3 = MenuText((3,4),"[escape] button pauses game, which allows you to exit or go to main menu.")
+		t4 = MenuText((3,6),"In the game, you controll a \"P\" player.")
+		t5 = MenuText((3,7),"In order to progress, shoot all enemies in the room, end reach the \"E\" exit ")
+		t6 = MenuText((3,9),"ENEMIES:")
+		t7 = MenuText((3,10),"They always appear underlined. Colliding with them will make Player lose health")
+		t8 = MenuText((3,11),"Losing all health ends the game.")
+		t9 = MenuText((3,13),"PICK-UP'S:")
+		t10 = MenuText((3,14),"They appear as lower case not-underlined characters.")
+		t11 = MenuText((3,15),"You can get new weapons or restore health by moving into them.")
+		t12 = MenuText((3,17),"If you leave the game without Player death or starting new game")
+		t13 = MenuText((3,18)," you can continue from the last visited room.")
+		t14 = MenuText((3,19),"Otherwise, using this button in main menu will start new game.")
 
-		texts = [t1,t2,t3,t4,t5,t6,t7,t8,t9]
+		texts = [t1,t2,t3,t4,t5,t6,t7,t8,t9,t10,t11,t12,t13,t14]
 
 		b1 = MenuButton((3,12),"back",self._button_main_menu)
 
