@@ -80,7 +80,7 @@ class KeyboardManager:
 		"""
 		setlist = list(set(key_list))
 		f = open("log")
-		f.write(setlist);
+		f.write(str(setlist));
 		v_list = [self.config[k] for k in setlist if k in self.config.keys()]
 		emitted_changes = []
 
