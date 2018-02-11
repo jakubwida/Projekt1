@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import getopt
 import sys
+import traceback
 from DungeonGameEngine.Launcher.Launcher import Launcher
 
 f = open("log","w")
@@ -20,6 +21,14 @@ for o, a in opts:
 	else:
 		assert False, "unhandled option"
 
-
-l = Launcher()
-l.launch()
+try:
+	l = Launcher()
+	l.launch()
+except Exception as e:
+	print("An error has occured, application has been terminated. \nFile \"log\" contains debugging information")
+	print(str(e))
+	f = open("log","w")
+	f.write("Error:\n")
+	f.write(str(e))
+	f.write("\n")
+	f.write(traceback.format_exc())

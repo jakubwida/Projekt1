@@ -1,0 +1,5 @@
+import os
+dir_path = os.path.dirname(os.path.realpath(__file__))
+
+generalnie to trzeba wszystko przerobić tak, żeby python działał ze wszystkim nawet uruchomiony z ./PyTerminalGame2/GameLauncher.py bo nie działa. To si dzieje tak że python w momencie uruchomienia z innego folderu bierze current directory z miejsca uruchomienia, raczej niż swoją lokalizację.
+###/// cd perla to juz dziala. trzeba teraz dorobic modul do highscore ktory bierze to pod uwage
