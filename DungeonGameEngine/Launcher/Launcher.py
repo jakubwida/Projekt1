@@ -22,6 +22,7 @@ from DungeonGameEngine.Actors.BaddieActor import BaddieActor
 import sys
 
 from DungeonGameEngine.Launcher.LevelReader import LevelReader
+from DungeonGameEngine.Launcher.HighscoreCommunicator import HighscoreCommunicator
 
 import datetime
 import os
@@ -32,7 +33,11 @@ class Launcher:
 		self.size = (80,32)
 
 		self.level_reader = LevelReader(self.size)
+		self.highscore_commuincator = HighscoreCommunicator(self._button_main_menu,self._button_highscore_summary_menu)
 
+		self.highscore_summary_menu = self.highscore_commuincator.get_name_summary_menu()
+		self.highscore_name_input_menu = self.highscore_commuincator.get_name_input_menu()
+		self.highscore_viewer = self.highscore_commuincator.get_viewer_menu()
 
 		self.main_menu = self.generate_main_menu()
 		self.help_menu = self.generate_help_menu()
@@ -43,6 +48,7 @@ class Launcher:
 		self.current_level = None
 		self.current_player = None
 		self.current_depth = 0
+		self.last_depth = 0
 		self.get_last_level()
 		#---
 
@@ -56,6 +62,7 @@ class Launcher:
 
 
 	def _button_newgame(self):
+		self.last_depth = 0
 		self.reset_level()
 		self.graphics_engine.set_root(self.current_level)
 
@@ -77,6 +84,16 @@ class Launcher:
 	def _button_end_pause(self):
 		self.graphics_engine.set_root(self.current_level)
 
+	def _button_highscore_name_input_menu(self):
+		self.graphics_engine.set_root(self.highscore_name_input_menu)
+		self.highscore_commuincator.set_highscore(self.last_depth)
+
+	def _button_highscore_summary_menu(self):
+		self.graphics_engine.set_root(self.highscore_summary_menu)
+
+	def _button_highscore_viewer(self):
+		self.graphics_engine.set_root(self.highscore_viewer)
+
 	def _goto_death_screen(self):
 		self.reset_level()
 		self.graphics_engine.set_root(self.death_screen)
@@ -85,20 +102,21 @@ class Launcher:
 		self.graphics_engine.set_root(self.pause_menu)
 
 	def _on_level_end(self,player):
+		self.last_depth = self.current_depth
 		self.current_depth+=1
 		self.generate_and_get_new_level()
 		self.graphics_engine.set_root(self.current_level)
 
 		score = 0
-		if os.path.isfile("current_highscore.txt"):
-			f = open("current_highscore.txt","r");
-			lines = f.readlines()
-			score = int(lines[0].split()[0])
-		if score < self.current_depth:
-			f = open("current_highscore.txt","w")
-			f.write(str(self.current_depth)+" ")
-			now = datetime.datetime.now()
-			f.write(str(now.year)+":"+str(now.month)+":"+str(now.day)+"\n")
+		#if os.path.isfile("current_highscore.txt"):
+		#	f = open("current_highscore.txt","r");
+		#	lines = f.readlines()
+		#	score = int(lines[0].split()[0])
+		#if score < self.current_depth:
+		#	f = open("current_highscore.txt","w")
+		#	f.write(str(self.current_depth)+" ")
+		#	now = datetime.datetime.now()
+		#	f.write(str(now.year)+":"+str(now.month)+":"+str(now.day)+"\n")
 
 	def generate_main_menu(self):
 		t1 = MenuText((3,1),"THE")
@@ -110,10 +128,10 @@ class Launcher:
 		b2 = MenuButton((3,7),"new game",self._button_newgame)
 		b3 = MenuButton((3,8),"options",self._button_options)
 		b4 = MenuButton((3,9),"help",self._button_help)
-		b5 = MenuButton((3,10),"quit",self._button_quit)
-
+		b5 = MenuButton((3,10),"view highscores",self._button_highscore_viewer)
+		b6 = MenuButton((3,11),"quit",self._button_quit)
 		texts = [t1,t2,t3,t4]
-		buttons = [b1,b2,b3,b4,b5]
+		buttons = [b1,b2,b3,b4,b5,b6]
 
 		mm = MenuGraphicsObject(buttons,texts)
 
@@ -122,23 +140,17 @@ class Launcher:
 	def generate_help_menu(self):
 		t1 = MenuText((3,1),"HELP SCREEN")
 		t2 = MenuText((3,3),"To navigate in the menus use [arrow keys], and [enter] to select.")
-		t3 = MenuText((3,4),"[escape] button pauses game, which allows you to exit or go to main menu.")
-		t4 = MenuText((3,6),"In the game, you controll a \"P\" player.")
-		t5 = MenuText((3,7),"In order to progress, shoot all enemies in the room, end reach the \"E\" exit ")
-		t6 = MenuText((3,9),"ENEMIES:")
-		t7 = MenuText((3,10),"They always appear underlined. Colliding with them will make Player lose health")
-		t8 = MenuText((3,11),"Losing all health ends the game.")
-		t9 = MenuText((3,13),"PICK-UP'S:")
-		t10 = MenuText((3,14),"They appear as lower case not-underlined characters.")
-		t11 = MenuText((3,15),"You can get new weapons or restore health by moving into them.")
-		t12 = MenuText((3,16),"You NEED to collect a weapon to be able to shoot enemies.")
-		t13 = MenuText((3,18),"If you leave the game without Player death or starting new game")
-		t14 = MenuText((3,19),"you can continue from the last visited room.")
-		t15 = MenuText((3,20),"Otherwise, using this button in main menu will start new game.")
+		t3 = MenuText((3,5),"In the game, you controll a \"P\" player.")
+		t4 = MenuText((3,6),"In order to progress, shoot all enemies in the room, end reach the \"E\" exit ")
+		t5 = MenuText((3,7),"You may use pick-ups to restore health, or get new weapons")
+		t6 = MenuText((3,8),"Enemies touching player will decrease health, which at 0 - will cause game over.")
+		t7 = MenuText((3,9),"Enemies are underlined.")
+		t8 = MenuText((3,10),"[escape] button pauses game, and allows to exit.")
+		t9 = MenuText((3,11),"Exiting will allow to continue game later, but with the last room reset.")
 
-		texts = [t1,t2,t3,t4,t5,t6,t7,t8,t9,t10,t11,t12,t13,t14,t15]
+		texts = [t1,t2,t3,t4,t5,t6,t7,t8,t9]
 
-		b1 = MenuButton((3,22),"back",self._button_main_menu)
+		b1 = MenuButton((3,12),"back",self._button_main_menu)
 
 		buttons = [b1]
 
@@ -180,8 +192,9 @@ class Launcher:
 
 		b1 = MenuButton((3,3),"main menu",self._button_main_menu)
 		b2 = MenuButton((3,4),"quit",self._button_quit)
+		b3 = MenuButton((3,5),"upload highscore",self._button_highscore_name_input_menu)
 
-		buttons = [b1,b2]
+		buttons = [b1,b2,b3]
 
 		om = MenuGraphicsObject(buttons,texts)
 		return om

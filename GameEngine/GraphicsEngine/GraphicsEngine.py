@@ -33,11 +33,7 @@ class GraphicsEngine:
 		this calls tick() on the .root graphicsObject, with keys and delta time passed in the meantime.
 		program will run untill stop() is called.
     	"""
-		try:
-			self.display.start()
-		except ValueError as e:
-			print(str(e))
-			exit(1)
+		self.display.start()
 		self._do_continue = True;
 		if self.root !=None:
 			try:

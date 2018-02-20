@@ -1,6 +1,18 @@
 Error:
-division by zero
+insert_score() missing 2 required positional arguments: 'name' and 'score'
 Traceback (most recent call last):
-  File "./GameLauncher.py", line 25, in <module>
-    a =1/0
-ZeroDivisionError: division by zero
+  File "./GameLauncher.py", line 26, in <module>
+    l.launch()
+  File "/home/jakub/Dokumenty/MagisterSem1/PracJezSkrypt/Projekt1/PyTerminalGame2/DungeonGameEngine/Launcher/Launcher.py", line 61, in launch
+    self.graphics_engine.start()
+  File "/home/jakub/Dokumenty/MagisterSem1/PracJezSkrypt/Projekt1/PyTerminalGame2/GameEngine/GraphicsEngine/GraphicsEngine.py", line 41, in start
+    self._main_loop_function()
+  File "/home/jakub/Dokumenty/MagisterSem1/PracJezSkrypt/Projekt1/PyTerminalGame2/GameEngine/GraphicsEngine/GraphicsEngine.py", line 75, in _main_loop_function
+    self.root.tick(delta,keys,self.root.coords)
+  File "/home/jakub/Dokumenty/MagisterSem1/PracJezSkrypt/Projekt1/PyTerminalGame2/DungeonGameEngine/Menu/MenuGraphicsObject.py", line 30, in tick
+    self.buttons[self.active_button_index].press()
+  File "/home/jakub/Dokumenty/MagisterSem1/PracJezSkrypt/Projekt1/PyTerminalGame2/DungeonGameEngine/Menu/MenuButton.py", line 22, in press
+    self.callabl()
+  File "/home/jakub/Dokumenty/MagisterSem1/PracJezSkrypt/Projekt1/PyTerminalGame2/DungeonGameEngine/Launcher/HighscoreCommunicator.py", line 65, in _on_upload_pressed
+    self.core.insert_score()
+TypeError: insert_score() missing 2 required positional arguments: 'name' and 'score'
