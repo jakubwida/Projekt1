@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
-DATABASE="result_base.txt"
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+DATABASE="$DIR/result_base.txt"
+
+#DATABASE="result_base.txt"
 TEMP="temp.txt"
 
 # $1= name, $2 = score
@@ -34,7 +37,7 @@ function get
 		fi
 
 	currdate=`date '+%Y-%m-%d %H:%M:%S'`
-	first=`awk '{a=$3" "$4; if (a > '"\"$startdate\""' ) print;}' result_base.txt`
+	first=`awk '{a=$3" "$4; if (a > '"\"$startdate\""' ) print;}' $DATABASE`
 
 	if [ $1 = "top" ]
 		then
@@ -65,3 +68,5 @@ elif [ "$1" = "get" ]
 	then
 		get "$2" "$3" "$4"
 fi
+
+#echo "trace $1 $2 $3" > $TEMP

@@ -30,10 +30,10 @@ class HighscoreCommunicator:
 	def _generate_name_input_menu(self):
 
 		t1 = MenuText((3,1),"Type in your username")
-		t2 = MenuText((3,2),"[A-Z] type, [BACKSPACE] erase, character limit = 128")
+		t2 = MenuText((3,2),"[A-Z] type, [BACKSPACE] erase, character limit = 64")
 		self.t_highscore = MenuText((3,3),"YOUR SCORE IS: "+str(0))
 		t3 = MenuText((1,5),"->")
-		self.type_text = MenuTypeText((3,5),"SampleName",128)
+		self.type_text = MenuTypeText((3,5),"SampleName",64)
 		self.info_text = MenuText((3,6),"")
 
 		b1 = MenuButton((3,8),"go to menu",self._func_goto_menu)
@@ -76,18 +76,19 @@ class HighscoreCommunicator:
 
 	def _generate_viewer_menu(self):
 		t1 = MenuText((3,1),"HIGHSCORES:")
-
+		t2 = MenuText((3,3),"NAME                                                             SCORE  DATE       TIME")
+		t3 = MenuText((3,15),"TO VIEW OTHER HIGHSCORES, USE BELLOW BUTTONS TO SELECT DIFFERENT ORDER AND TIME:")
 		self.highscore_viewer_text_menu_objs = []
 		for i in range(10):
-			t = MenuText((3,i+3),"")
+			t = MenuText((3,i+4),"")
 			self.highscore_viewer_text_menu_objs.append(t)
 
-		b1 = MenuButton((3,15),"go to menu",self._func_goto_menu)
+		b1 = MenuButton((3,25),"go to menu",self._func_goto_menu)
 
 		b_ord_1 = MenuButton((3,17),"top",lambda : self._request_results(0,True,None))
 		b_ord_2 = MenuButton((3,18),"bottom",lambda : self._request_results(1,False,None))
 
-		b_time_1 = MenuButton((3,20),"all time",lambda : self._request_results(2,None,"all time"))
+		b_time_1 = MenuButton((3,20),"all",lambda : self._request_results(2,None,"all"))
 		b_time_2 = MenuButton((3,21),"month",lambda : self._request_results(3,None,"month"))
 		b_time_3  = MenuButton((3,22),"week",lambda : self._request_results(4,None,"week"))
 		b_time_4  = MenuButton((3,23),"day",lambda : self._request_results(5,None,"day"))
@@ -95,16 +96,16 @@ class HighscoreCommunicator:
 		self.time_buttons = [b_time_1,b_time_2,b_time_3,b_time_4]
 		self.ord_buttons = [b_ord_1,b_ord_2]
 		self.istop = True
-		self.time = "all time"
+		self.time = "all"
 
 
-		texts = [t1]+self.highscore_viewer_text_menu_objs
+		texts = [t1,t2,t3]+self.highscore_viewer_text_menu_objs
 		buttons = [b1]+self.time_buttons+self.ord_buttons
 
 		m = MenuGraphicsObject(buttons,texts)
 
 		self._request_results(1,True,None)
-		self._request_results(2,None,"all time")
+		self._request_results(2,None,"all")
 
 		return m
 
@@ -128,9 +129,14 @@ class HighscoreCommunicator:
 		for i in range(10):
 			self.highscore_viewer_text_menu_objs[i].text = "---"
 
-		scores = self.core.get_scores(istop,time)
+		istoptext = "top"
+		if self.istop != True:
+			istoptext = "bottom"
+		scores = self.core.get_scores(istoptext,self.time)
 		for i,e in enumerate(scores):
-			self.highscore_viewer_text_menu_objs[i].text = e
+			s_scores = e.split(" ")
+
+			self.highscore_viewer_text_menu_objs[i].text = "%-64s %-6s %s %s" % (s_scores[0], s_scores[1], s_scores[2], s_scores[3])
 
 #TODO:
 # actual core - fill in the skellybob
