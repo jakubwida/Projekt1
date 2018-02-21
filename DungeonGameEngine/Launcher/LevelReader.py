@@ -43,10 +43,12 @@ import subprocess
 class LevelReader:
 	def __init__(self,size):
 		self.size =  size
-		self.last_level_filename = "last_level.txt"
+		self.dir_path = os.path.dirname(os.path.realpath(__file__))
+		self.dir_path = self.dir_path.replace("/DungeonGameEngine/Launcher","");
+		self.last_level_filename = self.dir_path+"/last_level.txt"
 
 	def read_last_level(self):
-		""" returns last level, and it's depth. TEMPORARY as yadda yadda reading/generating not implemented"""
+		""" returns last level, and it's depth. """
 		exists = os.path.isfile(self.last_level_filename)
 		if exists:
 			return self._read_level(self.last_level_filename)
@@ -80,9 +82,9 @@ class LevelReader:
 		a_player = PlayerActor(center_coords,[5,5])
 		#player.coords = center_coords
 		gs.add_child(a_player)
-		f = open("log","a")
-		f.write(str(a_player.health))
-		f.write("\n")
+		#f = open("log","a")
+		#f.write(str(a_player.health))
+		#f.write("\n")
 
 		gs.add_child(ExitWallActor((center_coords[0],center_coords[1]+6)))
 
@@ -124,7 +126,13 @@ class LevelReader:
 		#var = ""+str(size[0])+" "+str(size[1]-5)+" "+str(self.last_level_filename)+" "+str(weapon)+" "+str(player.health[0])+" "+str(depth)
 
 		FNULL = open(os.devnull, 'w')
-		subprocess.call(['perl', 'PerlLevelGen.pl',str(size[0]), str(size[1]-5), str(self.last_level_filename), str(weapon), str(player.health[0]), str(depth)],stdout=FNULL,stderr=FNULL);
+
+		#f = open("logg","a")
+		#f.write(str(self.dir_path)+"\n")
+		#f.write(str(self.last_level_filename)+"\n")
+		#f.write(str(self.dir_path+'/PerlLevelGen.pl')+"\n")
+
+		subprocess.call(['perl', self.dir_path+'/PerlLevelGen.pl',str(size[0]), str(size[1]-5), str(self.last_level_filename), str(weapon), str(player.health[0]), str(depth)],stdout=FNULL,stderr=FNULL);
 
 	def _read_level(self,filename):
 		""" returns a GameGraphicsObject, player and depth value as a,b,c, read from filename"""
