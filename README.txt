@@ -9,17 +9,14 @@ Contents:
 
 	-Perl level generator in PerlLevelGen.pl
 
-	-Bash highscore sending and viewing script at highscore_viewer.sh
-	-Bash highscore management server at HighscoreServer folder
+	-Bash highscore management server at HighscoreServer folder, with HighscoreDatabase.sh
 
 Running:
  	>to launch the game: ./GameLauncher.py
-	>to launch the highscore_viewer: ./highscore_viewer
-	>to launch the server (nescesary for viewer)-> in folder HighscoreServer: ./highscore_server
 
 	Perl level generator is run automatically by the Python game.
 
-	Python game is separate to the highscore management scripts. After playing, they have to be launched separately - with server first. Server will store highscore information, while viewer retrieves and sends it. Server may be launched on separate machine to the client.
+	Bash database is run automatically by the Python game.
 
 Author Comments:
 	The game is the most developed part. It is mostly complete, yet leaves room for relatively easy extensions.
@@ -27,4 +24,4 @@ Author Comments:
 
 	The generator is a simple piece of software dedicated to a single task: creation of random game levels with random, yet all accesible wall layout, random object distribution, and translation to format understood by python game.
 
-	The highscore server and viewer are parts of a simple database, dediacted to storing the sending and receiving highscores achieved by the player.
+	The highscore database is well, simplistic.
