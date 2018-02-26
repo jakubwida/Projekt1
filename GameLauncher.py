@@ -25,7 +25,7 @@ try:
 	l = Launcher()
 	l.launch()
 except Exception as e:
-	print("An error has occured, application has been terminated. \nFile \"log\" contains debugging information")
+	print("An error has occured, application has been terminated. \nFile \"log\" at the program diectory contains debugging information (stack trace)")
 	print(str(e))
 	dir_path = os.path.dirname(os.path.realpath(__file__))
 	f = open(dir_path+"/log","w")

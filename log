@@ -1,0 +1,12 @@
+Error:
+Terminal is too small. Required at least: width 80, height 32 while current is of height 24, width 80
+Traceback (most recent call last):
+  File "./GameLauncher.py", line 26, in <module>
+    l.launch()
+  File "/home/jakub/Dokumenty/MagisterSem1/PracJezSkrypt/Projekt1/PyTerminalGame2/DungeonGameEngine/Launcher/Launcher.py", line 61, in launch
+    self.graphics_engine.start()
+  File "/home/jakub/Dokumenty/MagisterSem1/PracJezSkrypt/Projekt1/PyTerminalGame2/GameEngine/GraphicsEngine/GraphicsEngine.py", line 36, in start
+    self.display.start()
+  File "/home/jakub/Dokumenty/MagisterSem1/PracJezSkrypt/Projekt1/PyTerminalGame2/GameEngine/GraphicsEngine/Display.py", line 52, in start
+    raise ValueError("Terminal is too small. Required at least: width "+str(self.size[0])+", height "+str(self.size[1])+" while current is of height "+str(ys)+", width "+str(xs))
+ValueError: Terminal is too small. Required at least: width 80, height 32 while current is of height 24, width 80
