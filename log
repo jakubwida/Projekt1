@@ -1,16 +1,12 @@
 Error:
-'int' object has no attribute 'stdout'
+Terminal is too small. Required at least: width 81, height 32 while current is of height 32, width 80
 Traceback (most recent call last):
-  File "./GameLauncher.py", line 25, in <module>
-    l = Launcher()
-  File "/home/jakub/Dokumenty/MagisterSem1/PracJezSkrypt/Projekt1/PyTerminalGame2/DungeonGameEngine/Launcher/Launcher.py", line 36, in __init__
-    self.highscore_commuincator = HighscoreCommunicator(self._button_main_menu,self._button_highscore_summary_menu)
-  File "/home/jakub/Dokumenty/MagisterSem1/PracJezSkrypt/Projekt1/PyTerminalGame2/DungeonGameEngine/Launcher/HighscoreCommunicator.py", line 17, in __init__
-    self._viewer_menu = self._generate_viewer_menu()
-  File "/home/jakub/Dokumenty/MagisterSem1/PracJezSkrypt/Projekt1/PyTerminalGame2/DungeonGameEngine/Launcher/HighscoreCommunicator.py", line 107, in _generate_viewer_menu
-    self._request_results(1,True,None)
-  File "/home/jakub/Dokumenty/MagisterSem1/PracJezSkrypt/Projekt1/PyTerminalGame2/DungeonGameEngine/Launcher/HighscoreCommunicator.py", line 135, in _request_results
-    scores = self.core.get_scores(istoptext,self.time)
-  File "/home/jakub/Dokumenty/MagisterSem1/PracJezSkrypt/Projekt1/PyTerminalGame2/DungeonGameEngine/Launcher/HighscoreCore.py", line 16, in get_scores
-    list_of_results = str(result.stdout.decode('utf-8')).splitlines()
-AttributeError: 'int' object has no attribute 'stdout'
+  File "./GameLauncher.py", line 26, in <module>
+    l.launch()
+  File "/home/jakub/Dokumenty/MagisterSem1/PracJezSkrypt/Projekt1/PyTerminalGame2/DungeonGameEngine/Launcher/Launcher.py", line 61, in launch
+    self.graphics_engine.start()
+  File "/home/jakub/Dokumenty/MagisterSem1/PracJezSkrypt/Projekt1/PyTerminalGame2/GameEngine/GraphicsEngine/GraphicsEngine.py", line 36, in start
+    self.display.start()
+  File "/home/jakub/Dokumenty/MagisterSem1/PracJezSkrypt/Projekt1/PyTerminalGame2/GameEngine/GraphicsEngine/Display.py", line 52, in start
+    raise ValueError("Terminal is too small. Required at least: width "+str(self.size[0]+1)+", height "+str(self.size[1])+" while current is of height "+str(ys)+", width "+str(xs))
+ValueError: Terminal is too small. Required at least: width 81, height 32 while current is of height 32, width 80

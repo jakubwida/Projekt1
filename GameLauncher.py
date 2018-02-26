@@ -16,7 +16,7 @@ except getopt.GetoptError as err:
 
 for o, a in opts:
 	if o in ("-h", "--help"):
-		print("This is the DUNGEON OF CURSES \nto launch it, run this file without passing options. \nThe screen must be at least 80/32 character sized. \nTo navigate in-game menus use arrow keys, and enter to select. \nMore information can be found in the README file and in-game help")
+		print("This is the DUNGEON OF CURSES \nto launch it, run this file without passing options. \nThe screen must be at least 81/32 character sized. \nTo navigate in-game menus use arrow keys, and enter to select. \nMore information can be found in the README file and in-game help")
 		sys.exit()
 	else:
 		assert False, "unhandled option"

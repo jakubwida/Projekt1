@@ -47,9 +47,9 @@ class Display:
 		self.stdscr = curses.initscr()
 
 		ys,xs = self.stdscr.getmaxyx()
-		if self.size[0] > xs or self.size[1] > ys:
+		if self.size[0]+1 > xs or self.size[1] > ys:
 			self.stop()
-			raise ValueError("Terminal is too small. Required at least: width "+str(self.size[0])+", height "+str(self.size[1])+" while current is of height "+str(ys)+", width "+str(xs))
+			raise ValueError("Terminal is too small. Required at least: width "+str(self.size[0]+1)+", height "+str(self.size[1])+" while current is of height "+str(ys)+", width "+str(xs))
 
 
 		self.stdscr.nodelay(True)
